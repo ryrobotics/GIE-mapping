@@ -1,4 +1,5 @@
-for_motion_planner: false
+for_motion_planner: true
+robot_r: 0.5
 display_loc_edt: true
 display_loc_ogm: false
 display_glb_edt: true

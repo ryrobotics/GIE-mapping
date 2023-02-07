@@ -14,8 +14,8 @@ VOLMAPNODE::VOLMAPNODE()
     // Subscriber
     if(param.data_case == "ugv_corridor" )
     {
-        s_odom_sub.subscribe(_nh,"/Odometry", 1);
-        s_pntcld_sub.subscribe(_nh,"/cloud_registered", 1);
+        s_odom_sub.subscribe(_nh,"/LaserOdomTopic", 1);
+        s_pntcld_sub.subscribe(_nh,"/rslidar_points", 1);
         pntcld_sync = new message_filters::Synchronizer<pntcld_sync_policy> (pntcld_sync_policy(30), s_pntcld_sub, s_odom_sub);
         pntcld_sync->setMaxIntervalDuration(ros::Duration(0.1));
         pntcld_sync->registerCallback(boost::bind(&VOLMAPNODE::CB_pntcld_odom,this,_1,_2));
