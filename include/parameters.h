@@ -144,20 +144,33 @@ struct Parameters
         nh.param<bool>("GIE_mapping/is_ext_obsv_3D",is_ext_obsv_3D,false);
 
 
-        int pre_obs_num, tmp_size;
+        int pre_obs_num, pre_free_num, tmp_size;
 
+        // load obs bbx
         XmlRpc::XmlRpcValue pre_obs_bbx_ll, pre_obs_bbx_ur;
         nh.getParam("GIE_mapping/pre_obs_bbx_ll", pre_obs_bbx_ll);
         tmp_size = load_f3_list(pre_obs_bbx_ll, obsbbx_ll);
-        assert(tmp_size>0);
         pre_obs_num = tmp_size;
+        if (tmp_size>0)
+        {
+            nh.getParam("GIE_mapping/pre_obs_bbx_ur", pre_obs_bbx_ur);
+            tmp_size = load_f3_list(pre_obs_bbx_ur, obsbbx_ur);
+            assert(tmp_size==pre_obs_num);
+        }
 
-        nh.getParam("GIE_mapping/pre_obs_bbx_ur", pre_obs_bbx_ur);
-        tmp_size = load_f3_list(pre_obs_bbx_ur, obsbbx_ur);
-        assert(tmp_size==pre_obs_num);
+        // load free bbx
+        XmlRpc::XmlRpcValue pre_free_bbx_ll, pre_free_bbx_ur;
+        nh.getParam("GIE_mapping/pre_free_bbx_ll", pre_free_bbx_ll);
+        tmp_size = load_f3_list(pre_free_bbx_ll, freeBBX_ll);
+        pre_free_num = tmp_size;
+        if (tmp_size>0)
+        {
+            nh.getParam("GIE_mapping/pre_free_bbx_ur", pre_free_bbx_ur);
+            tmp_size = load_f3_list(pre_free_bbx_ur, freeBBX_ur);
+            assert(tmp_size==pre_free_num);
+        }
 
-
-        std::cout<< pre_obs_num <<" presumed obstacles, "<<std::endl;
+        std::cout<< pre_obs_num <<" presumed obstacles, "<< pre_free_num << " presumed clear range " <<std::endl;
 
     }
 
