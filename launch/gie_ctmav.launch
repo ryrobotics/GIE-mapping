@@ -14,6 +14,6 @@
     </node>
 
     <node pkg="tf" type="static_transform_publisher" name="world_broadcaster" args="0 0 0 0 0 0 map camera_init 100" />
-    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find GIE)/cfg/laser3d.rviz" />
+    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find GIE)/cfg/ctmav_3D.rviz" />
 </launch>
 
