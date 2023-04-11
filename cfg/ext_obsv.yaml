@@ -9,5 +9,5 @@
 pre_obs_bbx_ll: [[-10.0, -10.0, 0.2]]
 pre_obs_bbx_ur: [[10.0, 10.0, 4.0]]
 
-pre_free_bbx_ll: [[0.0 ,4.0 ,0.0]]
-pre_free_bbx_ur: [[2.0 ,6.0 ,3.0]]
+pre_free_bbx_ll: [[-1.0,1.2,0.0]]
+pre_free_bbx_ur: [[1.0,2.2,3.0]]
