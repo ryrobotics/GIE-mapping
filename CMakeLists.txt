@@ -3,7 +3,7 @@ project(GIE)
 # set(ROS_BUILD_TYPE Debug)
 # set(CMAKE_BUILD_TYPE Debug)
 # Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -29,14 +29,14 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 if( ${CMAKE_BUILD_TYPE} STREQUAL Release)
-    SET(CUDA_NVCC_FLAGS "-arch=sm_61;-O3;-use_fast_math;-ftz=true;-prec-div=false;-prec-sqrt=false;-rdc=true" CACHE STRING "nvcc flags" FORCE)
+    SET(CUDA_NVCC_FLAGS "-arch=sm_72;-O3;-use_fast_math;-ftz=true;-prec-div=false;-prec-sqrt=false;-rdc=true" CACHE STRING "nvcc flags" FORCE)
     message("build CUDA with -O3")
 else()
     message("build CUDA with Debug")
-    SET(CUDA_NVCC_FLAGS "-g;-G;-arch=sm_61;-ftz=true;-rdc=true" CACHE STRING "nvcc flags" FORCE)
+    SET(CUDA_NVCC_FLAGS "-g;-G;-arch=sm_72;-ftz=true;-rdc=true" CACHE STRING "nvcc flags" FORCE)
     SET(CUDA_VERBOSE_BUILD ON CACHE BOOL "nvcc verbose" FORCE)
 endif()
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -std=c++11)
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -std=c++14)
 
 
 
@@ -104,13 +104,16 @@ target_link_libraries(
         ${CUDA_LIBRARIES}
 )
 # target_link_libraries(${PROJECT_NAME}_node cutt cudadevrt)
-IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-    target_link_libraries(${PROJECT_NAME}_node cutt_nx cudadevrt_nx)
-    message("link with cutt_nx")
-ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-    target_link_libraries(${PROJECT_NAME}_node cutt_docker cudadevrt_docker)
-    message("link with cutt_docker")
+# IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+#     target_link_libraries(${PROJECT_NAME}_node cutt_nx cudadevrt_nx)
+#     message("link with cutt_nx")
+# ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+#     target_link_libraries(${PROJECT_NAME}_node cutt_docker cudadevrt_docker)
+#     message("link with cutt_docker")
 # ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
 #     target_link_libraries(${PROJECT_NAME}_node cutt_pc cudadevrt_pc)
 #     message("link with cutt_pc")
-ENDIF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+# ENDIF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+
+target_link_libraries(${PROJECT_NAME}_node cutt_docker cudadevrt_docker)
+message("link with cutt_docker")
