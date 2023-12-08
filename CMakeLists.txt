@@ -103,17 +103,12 @@ target_link_libraries(
         ${catkin_LIBRARIES}
         ${CUDA_LIBRARIES}
 )
-# target_link_libraries(${PROJECT_NAME}_node cutt cudadevrt)
-# IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-#     target_link_libraries(${PROJECT_NAME}_node cutt_nx cudadevrt_nx)
-#     message("link with cutt_nx")
-# ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-#     target_link_libraries(${PROJECT_NAME}_node cutt_docker cudadevrt_docker)
-#     message("link with cutt_docker")
-# ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
-#     target_link_libraries(${PROJECT_NAME}_node cutt_pc cudadevrt_pc)
-#     message("link with cutt_pc")
-# ENDIF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
 
-target_link_libraries(${PROJECT_NAME}_node cutt_docker cudadevrt_docker)
-message("link with cutt_docker")
+IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+    target_link_libraries(${PROJECT_NAME}_node cutt_nx_cuda_${CUDA_VERSION_STRING} cudadevrt_nx_cuda_${CUDA_VERSION_STRING})
+    message("link with cutt_nx_cuda_${CUDA_VERSION_STRING}")
+ELSE(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+    target_link_libraries(${PROJECT_NAME}_node cutt_pc_cuda_${CUDA_VERSION_STRING} cudadevrt_pc_cuda_${CUDA_VERSION_STRING})
+    message("link with cutt_pc_cuda_${CUDA_VERSION_STRING}")
+ENDIF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+
